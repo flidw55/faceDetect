@@ -6,7 +6,6 @@ import cv2.cv as cv
 from video import create_capture
 from common import clock, draw_str
 import datetime as dt
-import GPIO24
 
 
 
@@ -55,7 +54,6 @@ if __name__ == '__main__':
 	cascade = cv2.CascadeClassifier(cascade_fn)
 
 	cam = create_capture(video_src, fallback='synth:bg=../cpp/lena.jpg:noise=0.05')
-    GPIOPIN = GpioForLights(12)
 	while True:
 		ret, img = cam.read()
 		vis = PicData(img,cascade)
@@ -63,12 +61,6 @@ if __name__ == '__main__':
 		#print type(vis)
 		cv2.imshow('facedetect', vis.DrawPic)
 		print vis.PeopleNum
-		if vis.PeopleNum == 1:
-			GPIOPIN.on()
-		elif vis.PeopleNum == 0:
-			GPIOPIN.off()
-		else:
-			print error
 
 		
 		if 0xFF & cv2.waitKey(5) == 27:
